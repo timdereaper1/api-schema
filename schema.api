@@ -1,0 +1,99 @@
+config {
+    baseURL = "https://jsonplaceholder.typicode.com/"
+}
+
+type Post {
+    userId          @integer
+    id              @integer  
+    title           @string
+    body            @string
+}
+
+type Comment {
+    postId          @integer
+    id              @integer  
+    name           @string
+    body            @string
+    email            @string
+}
+
+get Comments("comments"): [Comment]
+
+get Posts("posts"): [Post]
+
+type Album {
+    userId          @integer
+    id              @integer  
+    title           @string
+}
+
+get Albums("albums"): [Album]
+
+type Photo {
+    album           @integer
+    id              @integer  
+    title           @string
+    url           @string
+    thumbnailUrl           @string
+}
+
+get Photos("photos"): [Photo]
+
+type UserCompany {
+    name           @string
+    bs           @string
+    catchPhrase           @string
+}
+
+type User {
+    id              @integer  
+    name           @string
+    username           @string
+    email           @string
+    address  {
+        street          @string
+        suite          @string
+        city          @string
+        zipcode          @string
+        geo {
+            lat         @string
+            lng         @string
+        }
+    }
+    phone           @string
+    website         @string
+    company         UserCompany
+}
+
+get Users("users"): [User]
+
+input PostInput {
+    title   @string
+    body    @string
+    userId  @integer
+}
+
+type AddedUser {
+     id     @integer
+  title     @string
+  body      @string
+  userId    @integer
+}
+
+post AddPost("posts", PostInput): AddedUser
+
+input SinglePostInput {
+    id   @integer
+}
+
+get Post("post/{id}", SinglePostInput): Post
+
+input UpdatePostInput {
+    id  @integer
+    title   @string
+    body    @string
+    userId  @integer
+    postId  @integer
+}
+
+put UpdatePost("posts/{postId}", UpdatePostInput): Post
